@@ -1,48 +1,80 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - StockManagement</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">StockManagement</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - StockManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Title Page -->
+    <title>@ViewData["Title"] - StockManagement</title>
+
+    <!-- Fontfaces CSS-->
+    <link href="~/css/font-face.css" rel="stylesheet" media="all">
+    <link href="~/lib/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="~/lib/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="~/lib/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="~/lib/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="~/lib/animsition/animsition.min.css" rel="stylesheet" media="all">    
+    <link href="~/lib/vendor/wow/animate.css" rel="stylesheet" media="all">    
+    <link href="~/lib/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+
+    @RenderSection("Css", required: false)
+
+    <!-- Main CSS-->
+    <link href="~/css/theme.css" rel="stylesheet" media="all">
+
+</head>
+<body class="animsition">
+    <div class="page-wrapper">        
+        <partial name="_Sidebar"/>
+
+        <div class="page-container">  
+            <main class="main-container">
+                <partial name="_HeaderDesktop"/>
+                <partial name="_Breadcrumb"/>
+            
+                @RenderBody()        
+
+                <section class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © @( new DateTime().Year ) Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>            
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    </div>               
+    
+    <!-- Jquery JS-->
+    <script src="~/lib/jquery-3.2.1.min.js"></script>
+    
+    <!-- Bootstrap JS-->
+    <script src="~/lib/bootstrap-4.1/popper.min.js"></script>
+    <script src="~/lib/bootstrap-4.1/bootstrap.min.js"></script>
+
+    <!-- Vendor JS       -->
+    <script src="~/lib/slick/slick.min.js">
+    </script>
+    <script src="~/lib/wow/wow.min.js"></script>
+    <script src="~/lib/animsition/animsition.min.js"></script>                
+    <script src="~/lib/circle-progress/circle-progress.min.js"></script>
+    <script src="~/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    
     @RenderSection("Scripts", required: false)
+
+    <!-- Main JS-->
+    <script src="~/js/main.js"></script>
 </body>
 </html>
