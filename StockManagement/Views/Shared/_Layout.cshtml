@@ -21,8 +21,8 @@
     <link href="~/lib/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
 
     <!-- Vendor CSS-->
-    <link href="~/lib/animsition/animsition.min.css" rel="stylesheet" media="all">    
-    <link href="~/lib/wow/animate.css" rel="stylesheet" media="all">    
+    <link href="~/lib/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="~/lib/wow/animate.css" rel="stylesheet" media="all">
     <link href="~/lib/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
     <link href="~/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all" />
 
@@ -30,18 +30,17 @@
 
     <!-- Main CSS-->
     <link href="~/css/theme.css" rel="stylesheet" media="all">
-
 </head>
 <body class="animsition">
-    <div class="page-wrapper">        
-        <partial name="_Sidebar"/>
+    <div class="page-wrapper">
+        <partial name="_Sidebar" />
 
-        <div class="page-container">  
+        <div class="page-container">
             <main class="main-container">
-                <partial name="_HeaderDesktop"/>
-                <partial name="_Breadcrumb"/>
-            
-                @RenderBody()        
+                <partial name="_HeaderDesktop" />
+                <partial name="_Breadcrumb" />
+
+                @RenderBody()
 
                 <section class="footer">
                     <div class="container-fluid">
@@ -54,13 +53,13 @@
                         </div>
                     </div>
                 </section>
-            </main>            
+            </main>
         </div>
-    </div>               
-    
+    </div>
+
     <!-- Jquery JS-->
     <script src="~/lib/jquery-3.2.1.min.js"></script>
-    
+
     <!-- Bootstrap JS-->
     <script src="~/lib/bootstrap-4.1/popper.min.js"></script>
     <script src="~/lib/bootstrap-4.1/bootstrap.min.js"></script>
@@ -69,10 +68,10 @@
     <script src="~/lib/slick/slick.min.js">
     </script>
     <script src="~/lib/wow/wow.min.js"></script>
-    <script src="~/lib/animsition/animsition.min.js"></script>                
+    <script src="~/lib/animsition/animsition.min.js"></script>
     <script src="~/lib/circle-progress/circle-progress.min.js"></script>
     <script src="~/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
-    
+
     @RenderSection("scripts", required: false)
 
     <!-- Main JS-->

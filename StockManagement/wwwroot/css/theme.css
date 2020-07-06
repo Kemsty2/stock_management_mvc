@@ -4917,7 +4917,7 @@ section {
 .au-breadcrumb-content .au-breadcrumb-right {
     display: flex;
     justify-content: space-around;
-    flex-basis: 40%;
+    flex-basis: 30%;
 }
 
 @media (max-width: 991px) {

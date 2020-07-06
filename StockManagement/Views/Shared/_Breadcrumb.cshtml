@@ -1,3 +1,8 @@
+@{
+    var path = Context.Request.Path.ToString();
+    var paths = path.Split("/");
+}
+
 <!-- BREADCRUMB-->
 <section class="au-breadcrumb m-t-75">
     <div class="section__content section__content--p30">
@@ -7,28 +12,42 @@
                     <div class="au-breadcrumb-content">
                         <div class="au-breadcrumb-left">
                             <span class="au-breadcrumb-span">You are here:</span>
-                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                @if (path == "/")
+                                {
                                     <li class="list-inline-item active">
                                         <a href="#">Home</a>
                                     </li>
-                                    <li class="list-inline-item seprate">
-                                        <span>/</span>
-                                    </li>
-                                    <li class="list-inline-item">Dashboard</li>
-                                </ul>
-                        </div>  
+                                }
+                                else
+                                {
+                                    @foreach (var elt in paths)
+                                    {
+                                        if (elt.Length != 0)
+                                        {
+                                            <li class="list-inline-item active">
+                                                <a href="#">@elt</a>
+                                            </li>
+                                            <li class="list-inline-item seprate">
+                                                <span>/</span>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
                         <div class="au-breadcrumb-right">
                             <button class="btn btn-outline-primary">
                                 <i class="fa fa-level-up-alt mr-1"></i>Enregistrer Un Achat
-                            </button>                      
+                            </button>
                             <button class="btn btn-outline-secondary">
                                 <i class="fa fa-level-down-alt mr-1"></i>Enregistrer Un Retrait
                             </button>
-                        </div>                      
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
- <!-- END BREADCRUMB-->
+<!-- END BREADCRUMB-->
