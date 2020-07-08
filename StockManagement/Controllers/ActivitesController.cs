@@ -8,76 +8,17 @@ namespace StockManagement.Controllers
         // GET: ActivitesController
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(Achats));
         }
 
-        // GET: ActivitesController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Achats()
         {
             return View();
         }
 
-        // GET: ActivitesController/Create
-        public ActionResult Create()
+        public ActionResult Retraits()
         {
             return View();
-        }
-
-        // POST: ActivitesController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ActivitesController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ActivitesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ActivitesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ActivitesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
