@@ -30,7 +30,17 @@ namespace StockManagement
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/500");
+                app.Use(async (ctx, next) => {
+                    await next();
+                    if(ctx.Response.StatusCode == 404 && !ctx.Response.HasStarted){
+                        string originalPath = ctx.Request.Path.Value;
+                        ctx.Items["originalPath"] = originalPath;
+                        ctx.Request.Path = "/Home/404";
+                        await next();
+                    }
+                });
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

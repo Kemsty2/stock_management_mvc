@@ -32,10 +32,16 @@ namespace StockManagement.Controllers
             return View();
         }
 
+        [Route("500")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Route("404")]
+        public IActionResult NotFoundPage(){
+            return View();
         }
     }
 }
