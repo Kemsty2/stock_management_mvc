@@ -21,6 +21,24 @@ namespace StockManagement.Services.Impl
             _stockApi = stockApi;
         }
 
+        public async Task<Historique> GetHistoriqueById(Guid id)
+        {
+            try
+            {
+                var result = await _stockApi.GetHistoriqueById(id);
+                return result.Content;
+            }
+            catch(ApiException e){
+                _logger.LogError(e.Message);                
+                throw new StockApiException(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);                
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<Historique>> GetHistoriques()
         {
             try

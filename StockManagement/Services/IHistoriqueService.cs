@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using StockManagement.Services.Refit.Contracts.Requests;
@@ -10,5 +11,6 @@ namespace StockManagement.Services
     {
         Task<IEnumerable<Historique>> GetHistoriques();
         Task<PaginatedResponse<Historique>> GetPaginatedHistorique(PagingParams pagination);
+        Task<Historique> GetHistoriqueById(Guid id);
     }
 }

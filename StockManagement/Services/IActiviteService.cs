@@ -1,5 +1,6 @@
 ﻿using StockManagement.Services.Refit.Contracts.Requests;
 using StockManagement.Services.Refit.Contracts.Responses;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,5 +19,8 @@ namespace StockManagement.Services
         Task StoreAchat(CreateAchat achat);
 
         Task StoreRetrait(CreateRetrait retrait);
+
+        Task<Achat> GetAchatById(Guid id);
+        Task<Retrait> GetRetraitById(Guid id);
     }
 }

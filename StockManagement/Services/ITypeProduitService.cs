@@ -15,5 +15,6 @@ namespace StockManagement.Services
         Task CreateTypeProduit(CreateTypeProduit typeProduit);
         Task UpdateTypeProduit(Guid id, UpdateTypeProduit typeProduit);
         Task DeleteTypeProduit(Guid id);
+        Task<TypeProduit> GetTypeProduitById(Guid id);
     }
 }

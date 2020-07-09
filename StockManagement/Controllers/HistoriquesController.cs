@@ -1,10 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using StockManagement.Services;
+using StockManagement.Services.Refit.Contracts.Requests;
+using StockManagement.Services.Refit.Contracts.Responses;
 
 namespace StockManagement.Controllers
 {
     public class HistoriquesController : Controller
     {
+        private readonly ILogger<HistoriquesController> _logger;
+        private readonly IHistoriqueService _historiqueService;
+
+        public HistoriquesController(ILogger<HistoriquesController> logger, IHistoriqueService historiqueService){
+            _logger = logger;
+            _historiqueService = historiqueService;
+        }
+
         // GET: HistoriqueController
         public ActionResult Index()
         {
@@ -12,71 +25,33 @@ namespace StockManagement.Controllers
         }
 
         // GET: HistoriqueController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: HistoriqueController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: HistoriqueController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Details(Guid id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _historiqueService.GetHistoriqueById(id);
+                return View(result);
             }
-            catch
-            {
-                return View();
+            catch (Exception e)
+            {                
+                _logger.LogError(e.Message);
+                throw;
             }
         }
 
-        // GET: HistoriqueController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: HistoriqueController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [Route("paginated")]
+        [HttpGet]
+        public async Task<PaginatedResponse<Historique>> GetPaginatedHistoriques([FromQuery] PagingParams pagination)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _historiqueService.GetPaginatedHistorique(pagination);
+                return result;
             }
-            catch
+            catch (Exception e)
             {
-                return View();
-            }
-        }
-
-        // GET: HistoriqueController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: HistoriqueController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                _logger.LogError(e.Message);
+                throw;
             }
         }
     }

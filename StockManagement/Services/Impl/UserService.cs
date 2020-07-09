@@ -39,7 +39,7 @@ namespace StockManagement.Services.Impl
             }
         }
 
-        public async Task<PaginatedResponse<User>> GetPaginatedUser(PagingParams pagination)
+        public async Task<PaginatedResponse<User>> GetPaginatedUsers(PagingParams pagination)
         {
             try
             {
@@ -96,6 +96,24 @@ namespace StockManagement.Services.Impl
             try
             {
                 await _stockApi.ToggleStatusUser(id);
+            }
+            catch (ApiException e)
+            {
+                throw new StockApiException(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        public async Task<User> GetUserById(Guid id)
+        {
+            try
+            {
+                var result = await _stockApi.GetUserById(id);
+                return result.Content;
             }
             catch (ApiException e)
             {

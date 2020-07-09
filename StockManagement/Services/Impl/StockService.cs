@@ -56,5 +56,23 @@ namespace StockManagement.Services.Impl
                 throw;
             }
         }
+
+        public async Task<Produit> GetProduitById(Guid id)
+        {
+             try
+            {
+                var result = await _stockApi.GetProduitById(id);
+                return result.Content;
+            }
+            catch (ApiException e)
+            {
+                throw new StockApiException(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
     }
 }

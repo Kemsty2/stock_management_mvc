@@ -10,12 +10,14 @@ namespace StockManagement.Services
     {
         Task<IEnumerable<User>> GetUsers();
 
-        Task<PaginatedResponse<User>> GetPaginatedUser(PagingParams pagination);
+        Task<PaginatedResponse<User>> GetPaginatedUsers(PagingParams pagination);
 
         Task CreateUser(CreateUser user);
 
         Task UpdateUser(Guid id, UpdateUser user);
 
         Task ToggleStatusUser(Guid id);
+
+        Task<User> GetUserById(Guid id);
     }
 }

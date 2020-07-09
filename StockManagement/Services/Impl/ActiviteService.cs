@@ -103,6 +103,10 @@ namespace StockManagement.Services.Impl
             {
                 await _stockApi.CreateAchat(achat);
             }
+            catch (ApiException e)
+            {
+                throw new StockApiException(e.Message);
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e);
@@ -115,6 +119,46 @@ namespace StockManagement.Services.Impl
             try
             {
                 await _stockApi.CreateRetrait(retrait);
+            }
+            catch (ApiException e)
+            {
+                throw new StockApiException(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<Achat> GetAchatById(Guid id)
+        {
+            try
+            {
+                var result = await _stockApi.GetAchatById(id);
+                return result.Content;
+            }
+            catch (ApiException e)
+            {
+                throw new StockApiException(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<Retrait> GetRetraitById(Guid id)
+        {
+            try
+            {
+                var result = await _stockApi.GetRetraitById(id);
+                return result.Content;
+            }
+            catch (ApiException e)
+            {
+                throw new StockApiException(e.Message);
             }
             catch (Exception e)
             {
