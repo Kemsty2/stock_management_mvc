@@ -96,8 +96,11 @@ namespace StockManagement.Services.Refit
         /// <param name="id">l'identifiant de l'utilisateur à récupérer</param>
         /// <param name="v">  La version de l'api</param>
         /// <returns></returns>
-        [Get("/api/{v}/produits/{id}")]
+        [Get("/api/{v}/users/{id}")]
         Task<ApiResponse<User>> GetUserById(Guid id, string v = "v1");
+
+        [Post("/api/{v}/users/login")]
+        Task<ApiResponse<LoginResponse>> LoginUser(LoginUser payload, string v = "v1");
 
         #endregion "/api/{version}/users" Gestion des utilisateurs
 

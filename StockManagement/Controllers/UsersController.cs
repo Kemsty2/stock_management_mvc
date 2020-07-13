@@ -133,7 +133,6 @@ namespace StockManagement.Controllers
                 _logger.LogError(e.Message);
                 throw;
             }
-        }
-
+        }             
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StockManagement.Extensions;
+using StockManagement.Middlewares;
 
 namespace StockManagement
 {
@@ -18,7 +20,8 @@ namespace StockManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.ConfigureAuthentification();
+            services.AddControllersWithViews();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +52,8 @@ namespace StockManagement
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.ConfigureAuthenticationMiddleware();
+            app.ConfigureCookieMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

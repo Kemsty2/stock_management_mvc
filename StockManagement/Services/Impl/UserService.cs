@@ -125,5 +125,23 @@ namespace StockManagement.Services.Impl
                 throw;
             }
         }
+
+        public async Task<LoginResponse> AuthenticateUser(LoginUser payload)
+        {
+            try
+            {
+                var result = await _stockApi.LoginUser(payload);   
+                return result.Content;
+            }
+            catch (ApiException e)
+            {
+                throw new StockApiException(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
     }
 }

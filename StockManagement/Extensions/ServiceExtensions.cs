@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -7,6 +8,9 @@ using StockManagement.Services.Refit;
 using System;
 using StockManagement.Services;
 using StockManagement.Services.Impl;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using StockManagement.Security;
 
 namespace StockManagement.Extensions
 {
@@ -14,6 +18,26 @@ namespace StockManagement.Extensions
     {
         public static void ConfigureAuthentification(this IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                config =>
+                {
+                    config.Cookie.Name = "UserLoginCookie";
+                    config.LoginPath = "/Home/Login";
+                    config.LogoutPath = "/Home/Logout";
+                    config.AccessDeniedPath = "/Home/AccessDenied";
+                }
+            );
+
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("UserPolicy", policyBuilder => {
+                    policyBuilder.UserRequirementCustomClaim(ClaimTypes.Name);
+                    policyBuilder.UserRequirementCustomClaim(ClaimTypes.DateOfBirth);                    
+                });
+            });
+
+            services.AddScoped<IAuthorizationHandler, PoliciesAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, RolesAuthorizationHandler>();            
         }
 
         public static void ConfigureCustomServices(this IServiceCollection services)
@@ -52,5 +76,8 @@ namespace StockManagement.Extensions
                 options.Cookie.IsEssential = true;
             });
         }
+
+
+
     }
 }

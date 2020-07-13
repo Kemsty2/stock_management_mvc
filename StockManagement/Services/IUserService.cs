@@ -19,5 +19,7 @@ namespace StockManagement.Services
         Task ToggleStatusUser(Guid id);
 
         Task<User> GetUserById(Guid id);
+
+        Task<LoginResponse> AuthenticateUser(LoginUser payload);
     }
 }
