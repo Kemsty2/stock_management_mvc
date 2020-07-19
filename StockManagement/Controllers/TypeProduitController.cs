@@ -48,6 +48,32 @@ namespace StockManagement.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult CreateTypeProduit(){
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CreateTypeProduit([Bind("Id", "Label")] CreateTypeProduit payload){
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id", "Label")]UpdateTypeProduit payload)

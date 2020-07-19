@@ -2,16 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockManagement.Models;
 using StockManagement.Services;
-using StockManagement.Services.Refit.Contracts.Requests;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using StockManagement.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StockManagement.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,17 +26,14 @@ namespace StockManagement.Controllers
             _userService = userService;
         }
 
+        [Authorize(Roles = "Administrateur")]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }        
-
         [Route("500")]
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -41,33 +41,77 @@ namespace StockManagement.Controllers
         }
 
         [Route("404")]
-        public IActionResult NotFoundPage(){
+        [AllowAnonymous]
+        public IActionResult NotFoundPage()
+        {
             return View();
         }
 
-        public IActionResult Login(){
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginUser payload){
-            if(!ModelState.IsValid){
-                return View();
-            }
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginDto payload)
+        {
             try
             {
-                var result = await _userService.AuthenticateUser(payload);
+                if (!ModelState.IsValid)
+                    return View();
+
+                //var result = await _userService.AuthenticateUser(payload);
 
                 var claims = new List<Claim>{
-                    new Claim(ClaimTypes.Name, result.UserInfo.Username)                   
+                    new Claim(ClaimTypes.Name, "test")                    
                 };
+                if(payload.RememberMe){
+                    claims.Add(
+                        new Claim(ClaimTypes.Role, "Administrateur")
+                    );
+                }
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    new AuthenticationProperties { IsPersistent = payload.RememberMe }
+                );
+
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
-            {                
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
                 return View();
             }
-        }   
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> Logout()
+        {
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                return RedirectToAction(nameof(Login));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
     }
 }

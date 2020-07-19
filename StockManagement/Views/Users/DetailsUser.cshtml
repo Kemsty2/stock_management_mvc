@@ -1,0 +1,98 @@
+@section css {
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" media="all" />
+} 
+@{ ViewData["Title"] = "Details Utilisateur"; }
+
+<div class="main-content">
+  <div class="section__content section__content--p30">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title p-1">
+                <h3 class="text-center title-2">Details utilisateur</h3>
+              </div>
+              <hr />
+              <div class="row mt-4">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="nom" class="control-label mb-1">
+                      Noms
+                    </label>
+                    <input
+                      id="nom"
+                      name="text"
+                      readonly
+                      class="form-control valid"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="pseudo" class="control-label mb-1">
+                      Pseudo
+                    </label>
+                    <input
+                      id="pseudo"
+                      name="pseudo"
+                      type="number"
+                      readonly
+                      class="form-control valid"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="email" class="control-label mb-1">
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      readonly
+                      class="form-control valid"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="number" class="control-label mb-1">
+                      Numero
+                    </label>
+                    <input
+                      id="number"
+                      name="number"
+                      type="text"
+                      readonly
+                      class="form-control valid"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="role" class="control-label mb-1">
+                      Role
+                    </label>
+                    <input
+                      id="role"
+                      name="role"
+                      type="text"
+                      readonly
+                      class="form-control valid"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/lib/select2/select2.min.js"></script>
+}

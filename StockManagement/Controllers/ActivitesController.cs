@@ -85,6 +85,19 @@ namespace StockManagement.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult CreateAchat(){
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAchat([Bind()]CreateAchat payload){
@@ -99,6 +112,19 @@ namespace StockManagement.Controllers
             }
             catch (Exception e)
             {                
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CreateRetrait(){
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
                 _logger.LogError(e.Message);
                 throw;
             }

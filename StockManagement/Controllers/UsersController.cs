@@ -49,7 +49,7 @@ namespace StockManagement.Controllers
             }
         }
 
-        public ActionResult Create(){
+        public ActionResult CreateUser(){
             try
             {
                 return View();
@@ -63,7 +63,7 @@ namespace StockManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id", "Label")]CreateUser payload)
+        public async Task<IActionResult> CreateUser([Bind("Id", "Label")]CreateUser payload)
         {            
             if (!ModelState.IsValid)
             {
@@ -83,9 +83,13 @@ namespace StockManagement.Controllers
             }
         }
 
+        public ActionResult EditUser(Guid id){
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id", "Label")]UpdateUser payload)
+        public async Task<IActionResult> EditUser(Guid id, [Bind("Id", "Label")]UpdateUser payload)
         {
             if (id != payload.Id)
             {
@@ -109,7 +113,7 @@ namespace StockManagement.Controllers
             }
         }
 
-        public async Task<ActionResult> Details(Guid id){
+        public async Task<ActionResult> DetailsUser(Guid id){
             try
             {
                 var result = await _userService.GetUserById(id);

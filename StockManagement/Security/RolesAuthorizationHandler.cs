@@ -23,8 +23,7 @@ namespace StockManagement.Security
             }  
             else  
             {  
-                var claims = context.User.Claims;  
-                var userName = claims.FirstOrDefault(c => c.Type == "UserName").Value;  
+                var claims = context.User.Claims;                  
                 var userRoles = claims.Where(c => c.Type == ClaimTypes.Role);
 
                 var roles = requirement.AllowedRoles;  

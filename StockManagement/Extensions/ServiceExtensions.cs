@@ -18,6 +18,7 @@ namespace StockManagement.Extensions
     {
         public static void ConfigureAuthentification(this IServiceCollection services)
         {
+            // https://www.c-sharpcorner.com/article/policy-based-role-based-authorization-in-asp-net-core/
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 config =>
                 {
@@ -31,8 +32,7 @@ namespace StockManagement.Extensions
             services.AddAuthorization(config =>
             {
                 config.AddPolicy("UserPolicy", policyBuilder => {
-                    policyBuilder.UserRequirementCustomClaim(ClaimTypes.Name);
-                    policyBuilder.UserRequirementCustomClaim(ClaimTypes.DateOfBirth);                    
+                    policyBuilder.UserRequirementCustomClaim(ClaimTypes.Name);                                    
                 });
             });
 
@@ -47,6 +47,7 @@ namespace StockManagement.Extensions
             services.AddScoped<ITypeProduitService, TypeProduitService>();
             services.AddScoped<IActiviteService, ActiviteService>();
             services.AddScoped<IStockService, StockService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         public static void ConfigureRefit(this IServiceCollection services, IConfiguration configuration)
@@ -76,8 +77,5 @@ namespace StockManagement.Extensions
                 options.Cookie.IsEssential = true;
             });
         }
-
-
-
     }
 }

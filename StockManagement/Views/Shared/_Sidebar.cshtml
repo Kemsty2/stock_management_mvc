@@ -6,7 +6,7 @@
 <aside class="menu-sidebar2">
     <div class="logo">
         <a href="/">
-            <img src="images/icon/logo2.png" alt="Logo" />
+            <img src="~/images/icon/logo2.png" alt="Logo" />
         </a>
     </div>
     <div class="menu-sidebar2__content js-scrollbar1">
@@ -15,17 +15,17 @@
                 <img src="~/images/default-user.jpg" alt="User" />
             </div>
             <h4 class="name">Nom Utilisateur</h4>
-            <a href="#">Sign out</a>
+            <a href="@Url.Action("Logout", "Home")">Sign out</a>
         </div>
         <nav class="navbar-sidebar2">
             <ul class="list-unstyled navbar__list">
                 <li class="@(path == "/"? "active" : null)">
-                    <a href="/">
+                    <a href="@Url.Action("Index", "Home")">
                         <i class="fas fa-tachometer-alt"></i>Dashboard
                     </a>
                 </li>
                 <li class="@(path.Contains("TypeProduit")? "active" : null)">
-                    <a href="/TypeProduit">
+                    <a href="@Url.Action("Index", "TypeProduit")">
                         <i class="fab fa-product-hunt"></i>Type de Produits
                     </a>
                 </li>
@@ -38,24 +38,24 @@
                     </a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li class="@(path.Contains("Achats")? "active" : null)">
-                            <a href="/Activites/Achats">
+                            <a href="@Url.Action("Achats", "Activites")">                            
                                 <i class="fa fa-level-up-alt"></i> Achats
                             </a>
                         </li>
                         <li class="@(path.Contains("Retraits")? "active" : null)">
-                            <a href="/Activites/Retraits">
+                            <a href="@Url.Action("Retraits", "Activites")">
                                 <i class="fa fa-level-down-alt"></i> Retraits
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="@(path.Contains("Stocks")? "active" : null)">
-                    <a href="/Stocks">
+                    <a href="@Url.Action("Index", "Stocks")">
                         <i class="fa fa-briefcase"></i> Stocks
                     </a>
                 </li>
                 <li class="@(path.Contains("Users")? "active" : null)">
-                    <a href="/Users">
+                    <a href="@Url.Action("Index", "Users")">
                         <i class="fa fa-users"></i>Utilisateurs
                     </a>
                 </li>

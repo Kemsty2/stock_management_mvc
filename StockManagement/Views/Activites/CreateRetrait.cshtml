@@ -1,0 +1,93 @@
+@section css {
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" media="all">    
+    <link rel="stylesheet" href="~/css/jquery-ui.css" />
+}
+
+@{
+    ViewData["Title"] = "Enregistrer Retrait";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title p-1">
+                                <h3 class="text-center title-2">Enregister un Retrait</h3>
+                            </div>
+                            <hr/>
+                            <form asp-action="CreateRetrait" method="POST" asp-controller="Activites" class="mt-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="label" class="control-label mb-1">
+                                                Label
+                                            </label>
+                                            <input id="label" name="text" class="form-control valid" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="quantite" class="control-label mb-1">
+                                                Quantite
+                                            </label>
+                                            <input id="quantite" name="quantite" type="number" class="form-control valid" />
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="typeProduit" class="control-label mb-1">
+                                                Type Produit
+                                            </label>
+                                            <div class="rs-select2--light rs-select2--lg w-100" style="border: 1px solid #ced4da;">
+                                                <select id="typeProduit" name="typeProduit" class="js-select2 form-group">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="dateRetrait" class="control-label mb-1">
+                                                Date Retrait
+                                            </label>
+                                            <input id="dateRetrait" name="dateRetrait" type="text" class="form-control valid" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="description" class="control-label mb-1">
+                                                Description
+                                            </label>
+                                            <textarea class="form-control" rows="4" id="description" name="description"></textarea>
+                                        </div>
+                                    </div>                                                                     
+                                </div>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-outline-primary btn-block">
+                                            <i class="fa fa-plus"></i>&nbsp;
+                                            <span>Enregistrer</span>                                        
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/lib/select2/select2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="~/js/createRetrait.js"></script>
+}

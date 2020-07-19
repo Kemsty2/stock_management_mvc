@@ -1,0 +1,88 @@
+@section css {
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" media="all">        
+}
+
+@{
+    ViewData["Title"] = "Créer un Utilisateur";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title p-1">
+                                <h3 class="text-center title-2">Créer un nouvel utilisateur</h3>
+                            </div>
+                            <hr/>
+                            <form asp-action="CreateUser" method="POST" asp-controller="Users" class="mt-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nom" class="control-label mb-1">
+                                                Noms
+                                            </label>
+                                            <input id="nom" name="text" class="form-control valid" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="pseudo" class="control-label mb-1">
+                                                Pseudo
+                                            </label>
+                                            <input id="pseudo" name="pseudo" type="number" class="form-control valid" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email" class="control-label mb-1">
+                                                Email
+                                            </label>
+                                            <input id="email" name="email" type="email" class="form-control valid" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="number" class="control-label mb-1">
+                                                Numero
+                                            </label>
+                                            <input id="number" name="number" type="text" class="form-control valid" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="role" class="control-label mb-1">
+                                                Role
+                                            </label>
+                                            <div class="rs-select2--light rs-select2--lg w-100" style="border: 1px solid #ced4da;">
+                                                <select id="role" name="role" class="js-select2 form-group">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>                                                    
+                                                </select>
+                                                <div class="dropDownSelect2"></div>
+                                            </div>                                            
+                                        </div>
+                                    </div>                                                                                                                                             
+                                </div>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-outline-primary btn-block">
+                                            <i class="fa fa-plus"></i>&nbsp;
+                                            <span>Enregistrer</span>                                        
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/lib/select2/select2.min.js"></script>    
+}
