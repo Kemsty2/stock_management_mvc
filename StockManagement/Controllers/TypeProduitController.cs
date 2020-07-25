@@ -38,13 +38,14 @@ namespace StockManagement.Controllers
         }
 
         [Route("TypeProduit/paginated")]
-        [HttpPost]
+        [HttpGet]
         [Authorize]
-        public async Task<string> GetPaginatedTypesProduit(DataTableParams pagination)
+        public async Task<string> GetPaginatedTypesProduit([FromQuery] DataTableParams pagination)
         {
             try
             {
-                pagination.start += 1;
+                pagination.start += 1;                                
+
                 var result = await _typeProduitService.GetPaginatedTypesProduit(pagination);
 
                 return JsonConvert.SerializeObject(new
@@ -125,7 +126,7 @@ namespace StockManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> UpdateTypeProduit(Guid id, [Bind("Label", "Description")] UpdateTypeProduit payload)
+        public async Task<IActionResult> UpdateTypeProduit(Guid id, UpdateTypeProduit payload)
         {
             if (!ModelState.IsValid)
                 return RedirectToAction(nameof(UpdateTypeProduit));

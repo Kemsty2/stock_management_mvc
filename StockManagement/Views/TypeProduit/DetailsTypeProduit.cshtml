@@ -19,61 +19,50 @@
                             </div>
                             <hr/>
                             <div class="mt-4">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label asp-for="Id" class="control-label mb-1">
-                                                Id
-                                            </label>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
+                                        <div class="form-group">                                            
+                                            @Html.LabelFor(m => m.Id, "Id", new { @class = "control-label mb-1" })
                                             <input asp-for="Id" readonly class="form-control valid" />
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12">
+                                    <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
                                         <div class="form-group">
-                                            <label asp-for="Label" class="control-label mb-1">
-                                                Label
-                                            </label>
+                                            @Html.LabelFor(m => m.Label, "Label", new { @class = "control-label mb-1" })
                                             <input asp-for="Label" readonly class="form-control valid" />
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12">
+                                    <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
                                         <div class="form-group">
-                                            <label asp-for="Description" class="control-label mb-1">
-                                                Description
-                                            </label>
+                                            <label>
+                                                @Html.Raw("Cr√©e le")
+                                            </label>                                            
+                                            <input class="form-control" rows="4" asp-for="CreatedAt" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.UpdatedAt, Html.Raw("Derni√®re mise √† jour le").ToString(), new { @class = "control-label mb-1" })
+                                            <input class="form-control" rows="4" asp-for="UpdatedAt" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.CreatedBy, Html.Raw("Cr√©e par").ToString(), new { @class = "control-label mb-1" })
+                                            <input class="form-control" rows="4" asp-for="CreatedBy" readonly />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.UpdatedBy, Html.Raw("Derni√®re mise √† jour par").ToString(), new { @class = "control-label mb-1" })
+                                            <input class="form-control" rows="4" asp-for="UpdatedBy" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Description, "Description", new { @class = "control-label mb-1" })
                                             <textarea class="form-control" rows="4" asp-for="Description" readonly></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12">
-                                        <div class="form-group">
-                                            <label asp-for="CreatedAt" class="control-label mb-1">
-                                                CrÈe le
-                                            </label>
-                                            <textarea class="form-control" rows="4" asp-for="CreatedAt" readonly></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12">
-                                        <div class="form-group">
-                                            <label asp-for="UpdatedAt" class="control-label mb-1">
-                                                Mis ‡ Jour le
-                                            </label>
-                                            <textarea class="form-control" rows="4" asp-for="UpdatedAt" readonly></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12">
-                                        <div class="form-group">
-                                            <label asp-for="CreatedBy" class="control-label mb-1">
-                                                CrÈe par
-                                            </label>
-                                            <textarea class="form-control" rows="4" asp-for="CreatedBy" readonly></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 col-lg-6 col-xs-12">
-                                        <div class="form-group">
-                                            <label asp-for="UpdatedBy" class="control-label mb-1">
-                                                Mis ‡ Jour par
-                                            </label>
-                                            <textarea class="form-control" rows="4" asp-for="UpdatedBy" readonly></textarea>
                                         </div>
                                     </div>
                                 </div>

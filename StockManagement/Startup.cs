@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.WebEncoders;
 using StockManagement.Extensions;
 using StockManagement.Middlewares;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace StockManagement
 {
@@ -20,10 +23,14 @@ namespace StockManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<WebEncoderOptions>(options =>
+            {
+                options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
+            });
             services.ConfigureCustomServices();
             services.ConfigureRefit(Configuration);
             services.ConfigureAuthentification();
-            services.AddControllersWithViews();            
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,9 +43,11 @@ namespace StockManagement
             else
             {
                 app.UseExceptionHandler("/Home/500");
-                app.Use(async (ctx, next) => {
+                app.Use(async (ctx, next) =>
+                {
                     await next();
-                    if(ctx.Response.StatusCode == 404 && !ctx.Response.HasStarted){
+                    if (ctx.Response.StatusCode == 404 && !ctx.Response.HasStarted)
+                    {
                         string originalPath = ctx.Request.Path.Value;
                         ctx.Items["originalPath"] = originalPath;
                         ctx.Request.Path = "/Home/404";

@@ -3,8 +3,8 @@
 namespace StockManagement.Services.Refit.Contracts.Requests
 {
     public class UpdateTypeProduit
-    {
-        public Guid Id {get;set;}
+    {        
         public string Label {get;set;}
+        public string Description { get; set; }
     }
 }

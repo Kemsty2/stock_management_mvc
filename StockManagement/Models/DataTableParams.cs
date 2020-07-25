@@ -1,29 +1,32 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace StockManagement.Models
 {
     public class DataTableParams
     {
-        [FromForm(Name = "draw")]
+        [Required]
         public int draw { get; set; }
 
-        [FromForm(Name = "start")]
+        [Required]
         public int start { get; set; }
 
-        [FromForm(Name = "length")]
+        [Required]
         public int length { get; set; }
 
-        [FromForm(Name = "search[value]")]
         public string search { get; set; }
 
-        [FromForm(Name = "order[0][column]")]
+        [FromQuery(Name = "order[0][column]")]
         public int orderColumn { get; set; }
 
-        [FromForm(Name = "order[0][dir]")]
+        [FromQuery(Name = "order[0][dir]")]
         public string orderDir { get; set; }
 
-        public DateTime? openDate {get;set;}
-        public DateTime? closeDate {get;set;}        
+        public DateTime? openDate { get; set; }
+
+        public DateTime? closeDate { get; set; }
+        
+        public string sortColumn { get; set; }
     }
 }

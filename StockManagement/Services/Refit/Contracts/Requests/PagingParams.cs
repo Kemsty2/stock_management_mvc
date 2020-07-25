@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 
 namespace StockManagement.Services.Refit.Contracts.Requests
 {
@@ -17,5 +16,8 @@ namespace StockManagement.Services.Refit.Contracts.Requests
 
         [DataType(DataType.Date)]
         public DateTime? CloseDate { get; set; }
+
+        public int OrderColumn { get; set; }
+        public string OrderDir { get; set; }        
     }
 }
