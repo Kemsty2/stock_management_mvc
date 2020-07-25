@@ -1,9 +1,11 @@
-﻿using System;
+﻿using System.Security.Claims;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Refit;
 using StockManagement.Exceptions;
+using StockManagement.Models;
 using StockManagement.Services.Refit;
 using StockManagement.Services.Refit.Contracts.Requests;
 using StockManagement.Services.Refit.Contracts.Responses;
@@ -39,10 +41,18 @@ namespace StockManagement.Services.Impl
             }
         }
 
-        public async Task<PaginatedResponse<TypeProduit>> GetPaginatedTypesProduit(PagingParams pagination)
+        public async Task<PaginatedResponse<TypeProduit>> GetPaginatedTypesProduit(DataTableParams @params)
         {
             try
             {
+                var pagination = new PagingParams{
+                    PageNumber = @params.start,
+                    PageSize = @params.length,
+                    SearchQuery = @params.search,
+                    OpenDate = @params.openDate,
+                    CloseDate = @params.closeDate
+                };
+                
                 var result = await _stockApi.GetPaginatedTypesProduit(pagination);
                 return result.Content;
             }

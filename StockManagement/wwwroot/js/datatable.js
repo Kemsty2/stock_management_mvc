@@ -1,17 +1,17 @@
 (function ($){
     "use strict";
     try{
-        $(document).ready(function() {
-            var table = $('#my-table').DataTable({                    
-                "ajax": "arrays.json", 
+        $(document).ready(function() {            
+            var table = $("#my-table").DataTable({
+                ajax: {
+                    url,
+                    type: "POST",
+                    dataType: "JSON"
+                }, 
                 dom: '<"rs-select2--light rs-select2--md">frtip',                               
                 order: [[ 3, "desc" ]],
                 columns: [                    
-                    { data: "nom" },
-                    { data: "description" },
-                    { data: "statut" },
-                    { data: "createdAt" },
-                    { data: "createdBy", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ) },
+                    ...baseColumns,
                     {
                         data: null,                        
                         defaultContent: 
@@ -48,10 +48,8 @@
                 ]
             });
 
-            $('#my-table tbody').on( 'click', 'button', function () {
-                var data = table.row($(this).parents('tr')).data();
-                console.log(this);
-                console.log(data);
+            $("#my-table tbody").on( "click", "button", function () {
+                const data = table.row($(this).parents("tr")).data();
             });   
 
             $(".rs-select2--light").html(`
@@ -64,7 +62,7 @@
                 <div class="dropDownSelect2"></div>
             `);
 
-            $(".js-select2[name='property']").on('change', function(e){
+            $(".js-select2[name='property']").on("change", function(e){
                 e.preventDefault();
                 
                 console.log(e.target.value);
@@ -73,18 +71,18 @@
             });
 
             $(".js-select2[name='property']").select2({
-                placeholder: 'Select an option'
+                placeholder: "Select an option"
             });
 
-            $('.au-btn-filter').on("click", function(){
-                $('.collapse').collapse('toggle');
+            $(".au-btn-filter").on("click", function(){
+                $(".collapse").collapse("toggle");
             });
 
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
-                    var min = $('#start-date').datepicker("getDate");
-                    var max = $('#end-date').datepicker("getDate");
-                    var startDate = new Date(data[3]);
+                    const min = $("#start-date").datepicker("getDate");
+                    const max = $("#end-date").datepicker("getDate");
+                    const startDate = new Date(data[3]);
                     if (min == null && max == null) { return true; }
                     if (min == null && startDate <= max) { return true;}
                     if(max == null && startDate >= min) {return true;}
@@ -97,14 +95,14 @@
             $("#end-date").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });            
 
             // Event listener to the two range filtering inputs to redraw on input
-            $('#start-date, #end-date').change(function () {
+            $("#start-date, #end-date").change(function () {
                 table.draw();
             });
 
-            $('#clear').on('click', function(){
-                $('#start-date, #end-date').val('');
+            $("#clear").on("click", function(){
+                $("#start-date, #end-date").val("");
                 
-                $("input[aria-controls='my-table']").val('');
+                $("input[aria-controls='my-table']").val("");
 
                 table.draw();
             });

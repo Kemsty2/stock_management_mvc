@@ -1,13 +1,17 @@
-using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using StockManagement.Exceptions;
+using StockManagement.Models;
 using StockManagement.Services;
 using StockManagement.Services.Refit.Contracts.Requests;
-using StockManagement.Services.Refit.Contracts.Responses;
+using System;
+using System.Threading.Tasks;
 
 namespace StockManagement.Controllers
 {
+    [Authorize]
     public class TypeProduitController : Controller
     {
         private readonly ILogger<TypeProduitController> _logger;
@@ -19,6 +23,7 @@ namespace StockManagement.Controllers
             _typeProduitService = typeProduitService;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             try
@@ -32,14 +37,23 @@ namespace StockManagement.Controllers
             }
         }
 
-        [Route("paginated")]
-        [HttpGet]
-        public async Task<PaginatedResponse<TypeProduit>> GetPaginatedTypesProduit([FromQuery] PagingParams pagination)
+        [Route("TypeProduit/paginated")]
+        [HttpPost]
+        [Authorize]
+        public async Task<string> GetPaginatedTypesProduit(DataTableParams pagination)
         {
             try
             {
+                pagination.start += 1;
                 var result = await _typeProduitService.GetPaginatedTypesProduit(pagination);
-                return result;
+
+                return JsonConvert.SerializeObject(new
+                {
+                    pagination.draw,
+                    recordsTotal = result.Paging.TotalItems,
+                    data = result.Data,
+                    recordsFiltered = result.Paging.TotalItems
+                });
             }
             catch (Exception e)
             {
@@ -49,7 +63,9 @@ namespace StockManagement.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateTypeProduit(){
+        [Authorize]
+        public ActionResult CreateTypeProduit()
+        {
             try
             {
                 return View();
@@ -62,10 +78,42 @@ namespace StockManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateTypeProduit([Bind("Id", "Label")] CreateTypeProduit payload){
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateTypeProduit(CreateTypeProduit payload)
+        {
             try
             {
-                return View();
+                await _typeProduitService.CreateTypeProduit(payload);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        [Authorize]
+        public async Task<ActionResult> UpdateTypeProduit(Guid id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return NotFound();
+
+                var typeProduit = await _typeProduitService.GetTypeProduitById(id);
+
+                if (typeProduit == null)
+                    return NotFound();
+
+                return View(typeProduit);
+            }
+            catch (NotFoundException e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound();
             }
             catch (Exception e)
             {
@@ -76,16 +124,11 @@ namespace StockManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id", "Label")]UpdateTypeProduit payload)
+        [Authorize]
+        public async Task<IActionResult> UpdateTypeProduit(Guid id, [Bind("Label", "Description")] UpdateTypeProduit payload)
         {
-            if (id != payload.Id)
-            {
-                return NotFound();
-            }
             if (!ModelState.IsValid)
-            {
-                return NotFound();
-            }
+                return RedirectToAction(nameof(UpdateTypeProduit));
 
             try
             {
@@ -93,6 +136,11 @@ namespace StockManagement.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+            catch (NotFoundException e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound();
+            }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
@@ -100,27 +148,42 @@ namespace StockManagement.Controllers
             }
         }
 
-        public async Task<IActionResult> Details(Guid id){
+        [Authorize]
+        public async Task<IActionResult> DetailsTypeProduit(Guid id)
+        {
             try
             {
                 var result = await _typeProduitService.GetTypeProduitById(id);
+
                 return View(result);
             }
+            catch (NotFoundException e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound();
+            }
             catch (Exception e)
-            {                
+            {
                 _logger.LogError(e.Message);
                 throw;
             }
         }
 
-        public async Task<IActionResult> Delete(Guid id){
+        [Authorize]
+        public async Task<IActionResult> Delete(Guid id)
+        {
             try
             {
                 await _typeProduitService.DeleteTypeProduit(id);
                 return RedirectToAction(nameof(Index));
             }
+            catch (NotFoundException e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound();
+            }
             catch (Exception e)
-            {                
+            {
                 _logger.LogError(e.Message);
                 throw;
             }
