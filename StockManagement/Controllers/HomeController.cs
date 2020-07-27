@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,22 +12,24 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using StockManagement.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging.Abstractions;
+using StockManagement.Services.Refit.Contracts.Requests;
 
 namespace StockManagement.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        public ILogger<HomeController> Logger;
         private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, IUserService userService)
+        public HomeController(IUserService userService)
         {
-            _logger = logger;
+            Logger = NullLogger<HomeController>.Instance;
             _userService = userService;
         }
 
-        [Authorize(Roles = "Administrateur")]
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -35,7 +38,7 @@ namespace StockManagement.Controllers
         [Route("500")]
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error() 
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
@@ -69,16 +72,18 @@ namespace StockManagement.Controllers
                 if (!ModelState.IsValid)
                     return View();
 
-                //var result = await _userService.AuthenticateUser(payload);
+                var result = await _userService.AuthenticateUser(new LoginUser()
+                {
+                    Email = payload.Email,
+                    Password = payload.Password
+                });
 
                 var claims = new List<Claim>{
-                    new Claim(ClaimTypes.Name, "test")                    
+                    new Claim(ClaimTypes.Name, result.Name),
+                    new Claim("Token", result.Token)
                 };
-                if(payload.RememberMe){
-                    claims.Add(
-                        new Claim(ClaimTypes.Role, "Administrateur")
-                    );
-                }
+
+                claims.AddRange(result.Roles.Select(role => new Claim(ClaimTypes.Role, role.Label)));
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -92,7 +97,7 @@ namespace StockManagement.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 return View();
             }
         }
@@ -109,7 +114,7 @@ namespace StockManagement.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }

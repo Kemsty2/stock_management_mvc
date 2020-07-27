@@ -3,6 +3,7 @@ using StockManagement.Services.Refit.Contracts.Responses;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using StockManagement.Models;
 
 namespace StockManagement.Services
 {
@@ -10,7 +11,7 @@ namespace StockManagement.Services
     {
         Task<IEnumerable<User>> GetUsers();
 
-        Task<PaginatedResponse<User>> GetPaginatedUsers(PagingParams pagination);
+        Task<PaginatedResponse<User>> GetPaginatedUsers(DataTableParams @params);
 
         Task CreateUser(CreateUser user);
 

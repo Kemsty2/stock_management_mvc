@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Refit;
 using StockManagement.Exceptions;
+using StockManagement.Models;
 
 namespace StockManagement.Services.Impl
 {
@@ -39,10 +40,18 @@ namespace StockManagement.Services.Impl
             }
         }
 
-        public async Task<PaginatedResponse<User>> GetPaginatedUsers(PagingParams pagination)
+        public async Task<PaginatedResponse<User>> GetPaginatedUsers(DataTableParams @params)
         {
             try
             {
+                var pagination = new PagingParams
+                {
+                    SearchQuery = @params.search,
+                    OpenDate = @params.openDate,
+                    CloseDate = @params.closeDate,
+                    OrderColumn = @params.orderColumn,
+                    OrderDir = @params.orderDir
+                };
                 var result = await _stockApi.GetPaginatedUsers(pagination);
                 return result.Content;
             }

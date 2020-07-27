@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using StockManagement.Exceptions;
 using StockManagement.Models;
@@ -14,12 +15,12 @@ namespace StockManagement.Controllers
     [Authorize]
     public class TypeProduitController : Controller
     {
-        private readonly ILogger<TypeProduitController> _logger;
+        public ILogger<TypeProduitController> Logger;
         private readonly ITypeProduitService _typeProduitService;
 
-        public TypeProduitController(ILogger<TypeProduitController> logger, ITypeProduitService typeProduitService)
+        public TypeProduitController(ITypeProduitService typeProduitService)
         {
-            _logger = logger;
+            Logger = NullLogger<TypeProduitController>.Instance;
             _typeProduitService = typeProduitService;
         }
 
@@ -32,7 +33,7 @@ namespace StockManagement.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }
@@ -44,7 +45,7 @@ namespace StockManagement.Controllers
         {
             try
             {
-                pagination.start += 1;                                
+                pagination.start += 1;
 
                 var result = await _typeProduitService.GetPaginatedTypesProduit(pagination);
 
@@ -58,7 +59,7 @@ namespace StockManagement.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }
@@ -73,7 +74,7 @@ namespace StockManagement.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }
@@ -85,13 +86,16 @@ namespace StockManagement.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return View();
+
                 await _typeProduitService.CreateTypeProduit(payload);
 
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }
@@ -113,12 +117,12 @@ namespace StockManagement.Controllers
             }
             catch (NotFoundException e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 return NotFound();
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }
@@ -139,12 +143,12 @@ namespace StockManagement.Controllers
             }
             catch (NotFoundException e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 return NotFound();
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }
@@ -160,12 +164,12 @@ namespace StockManagement.Controllers
             }
             catch (NotFoundException e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 return NotFound();
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }
@@ -180,12 +184,12 @@ namespace StockManagement.Controllers
             }
             catch (NotFoundException e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 return NotFound();
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                Logger.LogError(e.Message);
                 throw;
             }
         }
